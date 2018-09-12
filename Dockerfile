@@ -1,4 +1,4 @@
-FROM ubuntu:bionic
+FROM ubuntu:rolling
 
 RUN apt-get -y update
 
@@ -109,14 +109,3 @@ RUN git clone --depth 1 https://github.com/SDU-Embedded/gst-build.git && \
 RUN DEBIAN_FRONTEND=noninteractive  apt-get clean && \
   apt-get autoremove -y
 
-#Add new sudo user
-ENV USERNAME leon
-RUN useradd -m $USERNAME && \
-        echo "$USERNAME:$USERNAME" | chpasswd && \
-        usermod --shell /bin/bash $USERNAME && \
-        usermod -aG sudo $USERNAME && \
-        echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/$USERNAME && \
-        chmod 0440 /etc/sudoers.d/$USERNAME && \
-        # Replace 1000 with your user/group id
-        usermod  --uid 1000 $USERNAME && \
-        groupmod --gid 1000 $USERNAME

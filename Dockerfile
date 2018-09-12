@@ -1,4 +1,4 @@
-FROM ubuntu:rolling
+FROM ubuntu:bionic
 
 RUN apt-get -y update
 
@@ -88,7 +88,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
   python-gi-dev \
   graphviz \
   ninja-build \
-  libopencv-dev
+  libopencv-dev \
+  iproute2 \
+  vim 
 
 # Install app dependencies
 RUN pip3 install --upgrade pip
@@ -106,3 +108,15 @@ RUN git clone --depth 1 https://github.com/SDU-Embedded/gst-build.git && \
 # Do some cleanup
 RUN DEBIAN_FRONTEND=noninteractive  apt-get clean && \
   apt-get autoremove -y
+
+#Add new sudo user
+ENV USERNAME leon
+RUN useradd -m $USERNAME && \
+        echo "$USERNAME:$USERNAME" | chpasswd && \
+        usermod --shell /bin/bash $USERNAME && \
+        usermod -aG sudo $USERNAME && \
+        echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/$USERNAME && \
+        chmod 0440 /etc/sudoers.d/$USERNAME && \
+        # Replace 1000 with your user/group id
+        usermod  --uid 1000 $USERNAME && \
+        groupmod --gid 1000 $USERNAME

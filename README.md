@@ -4,7 +4,7 @@ Build of gstreamer based on https://github.com/SDU-Embedded including plugins un
 There are two use-cases for this container:
 
 1. You want to use one of the developed plugins. We typically use gstreamer in containers as data processors. Below is an example of processing sound into spectrogram video.
-2. You want to develop a plugin. Working in the container saves you the trouble of intalling dependencies and makes it easy to share your work.
+2. You want to develop a plugin. Working in the container saves you the trouble of installing dependencies and makes it easy to share your work.
 
 # Test
 The test will run a container processing sound data into video of a spectrogram. It assumes that you have gstreamer installed on your computer (the host). Instructions on how to install can be found here:
